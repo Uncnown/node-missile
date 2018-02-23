@@ -4,8 +4,7 @@ function connect() {
   const launcher = usb.findByIds(0x2123, 0x1010);
 
   if (!launcher) {
-    console.log('no missile launcher found');
-    process.exit();
+    return Promise.reject('no missile launcher found');
   }
 
   launcher.open();
@@ -16,7 +15,7 @@ function connect() {
     }
   });
 
-  return launcher;
+  return Promise.resolve(launcher);
 }
 
 function control_transfer(device, cmd) {
@@ -34,18 +33,18 @@ function control_transfer(device, cmd) {
 }
 
 module.exports = {
-  connect: () => {
-    const launcher = connect();
-    const send = cmd => control_transfer(launcher, cmd);
+  connect: () => connect()
+    .then((launcher) => {
+      const send = cmd => control_transfer(launcher, cmd);
 
-    return {
-      down:  () => send(0x01),
-      up:    () => send(0x02),
-      left:  () => send(0x04),
-      right: () => send(0x08),
-      fire:  () => send(0x10),
-      stop:  () => send(0x20),
-    };
-  }
+      return {
+        down:  () => send(0x01),
+        up:    () => send(0x02),
+        left:  () => send(0x04),
+        right: () => send(0x08),
+        fire:  () => send(0x10),
+        stop:  () => send(0x20),
+      };
+    }),
 };
 
