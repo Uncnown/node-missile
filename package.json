@@ -1,0 +1,22 @@
+{
+  "name": "node-missile",
+  "version": "1.0.0",
+  "description": "Control the Syntek USB Missile Launcher",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/torkildr/node-missile.git"
+  },
+  "author": "Torkild Retvedt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/torkildr/node-missile/issues"
+  },
+  "homepage": "https://github.com/torkildr/node-missile#readme",
+  "dependencies": {
+    "usb": "^1.3.1"
+  }
+}
