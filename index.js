@@ -7,13 +7,18 @@ function connect() {
     return Promise.reject('no missile launcher found');
   }
 
-  launcher.open();
-  
-  launcher.interfaces.map((interface) => {
-    if (interface.isKernelDriverActive()) {
-      interface.detachKernelDriver()
-    }
-  });
+  try {
+    launcher.open();
+    
+    launcher.interfaces.map((interface) => {
+      if (interface.isKernelDriverActive()) {
+        interface.detachKernelDriver()
+      }
+    });
+  }
+  catch (err) {
+    return Promise.reject(err);
+  }
 
   return Promise.resolve(launcher);
 }
@@ -34,8 +39,8 @@ function control_transfer(device, cmd) {
 
 module.exports = {
   connect: () => connect()
-    .then((launcher) => {
-      const send = cmd => control_transfer(launcher, cmd);
+    .then((device) => {
+      const send = cmd => control_transfer(device, cmd);
 
       return {
         down:  () => send(0x01),

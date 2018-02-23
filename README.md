@@ -29,17 +29,29 @@ Usage
 
 The library exposes the commands `up`, `down`, `left`, `right`, `fire` and `stop`.
 
+All commands return promises.
 
 Example usage, point upwards, then stop after 300ms and shoot:
 
-```
-const launcher = require('node-missile').connect();
+```javascript
+const missile = require('node-missile')
 
-launcher.up();
-setTimeout(() => {
-  launcher.stop();
-  launcher.fire();
-}, 300);
+missile.connect().then(launcher => {
+  console.log('connected');
+
+  return launcher.up()
+    .then(() => {
+      console.log('moving up...');
+
+      setTimeout(() => {
+        console.log('fireing!');
+
+        launcher.stop()
+          .then(() => launcher.fire())
+          .catch(console.error);
+      }, 300);
+    });
+}).catch(console.error);
 
 ```
 
