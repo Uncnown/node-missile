@@ -27,5 +27,19 @@ sudo apt install build-essential libudev-dev
 Usage
 -----
 
+The library exposes the commands `up`, `down`, `left`, `right`, `fire` and `stop`.
 
+
+Example usage, point upwards, then stop after 300ms and shoot:
+
+```
+const launcher = require('node-missile').connect();
+
+launcher.up();
+setTimeout(() => {
+  launcher.stop();
+  launcher.fire();
+}, 300);
+
+```
 
