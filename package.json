@@ -1,6 +1,6 @@
 {
   "name": "node-missile",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Control the Syntek USB Missile Launcher",
   "main": "index.js",
   "scripts": {
