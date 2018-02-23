@@ -21,11 +21,16 @@ function connect() {
 
 function control_transfer(device, cmd) {
   data = new Buffer([0x2, cmd, 0, 0, 0, 0, 0, 0, 0]);
-  device.controlTransfer(0x21, 0x9, 0, 0, data, (error, res) => {
-    if (error) {
-      console.error(error);
-    }
-  })
+
+  return new Promise((resolve, reject) => {
+    device.controlTransfer(0x21, 0x9, 0, 0, data, (error, res) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(res);
+      }
+    })
+  });
 }
 
 module.exports = {
